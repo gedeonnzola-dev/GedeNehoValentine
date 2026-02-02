@@ -1,185 +1,196 @@
-:root{
-  --bg1:#0b0b14;
-  --bg2:#15152a;
-  --card:#0f1020;
-  --text:#f6f6ff;
-  --muted:#b9b9d6;
-  --pink:#ff4fd8;
-  --pink2:#ff7ae6;
-  --green:#31d07f;
-  --red:#ff4d6d;
-  --stroke:rgba(255,255,255,.12);
-  --shadow: 0 20px 80px rgba(0,0,0,.45);
-  --radius: 18px;
-  font-synthesis-weight:none;
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const prStatus = document.getElementById("prStatus");
+const title = document.getElementById("title");
+const statusLine = document.getElementById("statusLine");
+const confetti = document.getElementById("confetti");
+
+const openNoteBtn = document.getElementById("openNoteBtn");
+const modal = document.getElementById("modal");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const modalCloseBtn = document.getElementById("modalCloseBtn");
+const modalYesBtn = document.getElementById("modalYesBtn");
+
+/** ---------- Confetti ---------- */
+function popConfetti() {
+  confetti.innerHTML = "";
+  const pieces = 140;
+
+  for (let i = 0; i < pieces; i++) {
+    const s = document.createElement("span");
+    const left = Math.random() * 100;
+    const delay = Math.random() * 0.25;
+    const size = 8 + Math.random() * 12;
+    const hue = 315 + Math.random() * 35; // romantic pink range
+
+    s.style.left = left + "vw";
+    s.style.animationDelay = delay + "s";
+    s.style.width = Math.max(6, size * 0.55) + "px";
+    s.style.height = size + "px";
+    s.style.background = `hsl(${hue}, 95%, 65%)`;
+
+    confetti.appendChild(s);
+  }
+
+  setTimeout(() => (confetti.innerHTML = ""), 2600);
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-  color:var(--text);
-  background:
-    radial-gradient(1200px 800px at 20% 10%, rgba(255,79,216,.25), transparent 60%),
-    radial-gradient(900px 700px at 90% 20%, rgba(49,208,127,.18), transparent 55%),
-    linear-gradient(160deg, var(--bg1), var(--bg2));
-  display:grid;
-  place-items:center;
-  padding:24px;
+/** ---------- Romantic "Merge" ---------- */
+let merged = false;
+function doMerge() {
+  if (merged) return;
+  merged = true;
+
+  prStatus.textContent = "Merged 💞";
+  prStatus.style.color = "var(--green)";
+  prStatus.style.background = "rgba(49,208,127,.12)";
+
+  title.textContent = "Merged into my heart 💖";
+
+  statusLine.innerHTML =
+    `<span class="mono">Checks:</span> ` +
+    `<span class="ok">●</span> love approved ` +
+    `<span class="sep">•</span> ` +
+    `<span class="ok">●</span> date scheduled ` +
+    `<span class="sep">•</span> ` +
+    `<span class="ok">●</span> happiness deployed`;
+
+  popConfetti();
+
+  // Soft glow pulse
+  document.body.animate(
+    [
+      { filter: "brightness(1)" },
+      { filter: "brightness(1.06)" },
+      { filter: "brightness(1)" }
+    ],
+    { duration: 900, iterations: 1 }
+  );
+
+  // Auto-open the note after merge (feels like a "surprise")
+  setTimeout(() => showModal(true), 400);
 }
 
-.card{
-  width:min(720px, 100%);
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-  border:1px solid var(--stroke);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  position:relative;
+/** ---------- “No” button (romantic, not annoying) ---------- */
+const noLines = [
+  "Totally fair. I’ll retry with more flowers. 🌸",
+  "Noted. I’ll refactor my courage and resubmit softly. 💗",
+  "Okay… I’ll come back with a better plan and a warmer smile. 😊",
+  "Request received. I’ll improve the proposal and try again. 🫶"
+];
+
+let noCount = 0;
+noBtn.addEventListener("click", () => {
+  noCount++;
+
+  // gentle scoot once or twice (not chaotic)
+  const x = (Math.random() * 80) - 40;
+  const y = (Math.random() * 30) - 15;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  setTimeout(() => (noBtn.style.transform = ""), 160);
+
+  const msg = noLines[Math.min(noCount - 1, noLines.length - 1)];
+  statusLine.textContent = msg;
+
+  // Keep it romantic: after 4 tries, stop moving and just be sweet
+  if (noCount >= 4) {
+    noBtn.style.transform = "";
+    statusLine.textContent = "No pressure. I just really like you. 💖";
+  }
+});
+
+/** ---------- Slideshow ---------- */
+const slideImg = document.getElementById("slideImg");
+const captionTitle = document.getElementById("captionTitle");
+const captionSub = document.getElementById("captionSub");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const dotsWrap = document.getElementById("dots");
+
+const slides = [
+  { src: "assets/photo1.jpg", title: "commit: you made my day brighter", sub: "hash: 0214-love" },
+  { src: "assets/photo2.jpg", title: "feat: my favourite person update", sub: "hash: you-are-it" },
+  { src: "assets/photo3.jpg", title: "chore: save this memory forever", sub: "hash: soft-vibes" },
+];
+
+let idx = 0;
+let timer = null;
+
+function renderDots() {
+  dotsWrap.innerHTML = "";
+  slides.forEach((_, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = i === idx ? "active" : "";
+    b.addEventListener("click", () => goTo(i));
+    dotsWrap.appendChild(b);
+  });
 }
 
-.header{
-  padding:28px 28px 16px 28px;
-  border-bottom:1px solid var(--stroke);
-  background: radial-gradient(700px 250px at 10% 0%, rgba(255,79,216,.20), transparent 60%);
+function goTo(i) {
+  idx = (i + slides.length) % slides.length;
+  slideImg.style.opacity = "0.25";
+
+  setTimeout(() => {
+    slideImg.src = slides[idx].src;
+    captionTitle.textContent = slides[idx].title;
+    captionSub.textContent = slides[idx].sub;
+    renderDots();
+    slideImg.style.opacity = "1";
+  }, 180);
 }
 
-.badge{
-  display:inline-block;
-  padding:6px 10px;
-  border:1px solid var(--stroke);
-  border-radius:999px;
-  font-size:12px;
-  color:var(--muted);
-  letter-spacing:.3px;
-  margin-bottom:12px;
+function next() { goTo(idx + 1); }
+function prev() { goTo(idx - 1); }
+
+nextBtn.addEventListener("click", next);
+prevBtn.addEventListener("click", prev);
+
+// Auto-advance
+function startAuto() {
+  stopAuto();
+  timer = setInterval(next, 4500);
+}
+function stopAuto() {
+  if (timer) clearInterval(timer);
+  timer = null;
 }
 
-h1{
-  margin:0 0 8px 0;
-  font-size: clamp(28px, 4vw, 40px);
-  line-height:1.1;
-}
+slideImg.addEventListener("mouseenter", stopAuto);
+slideImg.addEventListener("mouseleave", startAuto);
 
-.sub{
-  margin:0;
-  color:var(--muted);
-}
+renderDots();
+startAuto();
 
-.code{
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  padding:2px 6px;
-  border-radius:8px;
-  background: rgba(255,255,255,.06);
-  border:1px solid var(--stroke);
-}
-
-.details{
-  padding:22px 28px 26px 28px;
-}
-
-.row{
-  display:grid;
-  grid-template-columns: 160px 1fr;
-  gap:14px;
-  padding:10px 0;
-  border-bottom:1px dashed rgba(255,255,255,.10);
-}
-.row:last-of-type{border-bottom:none}
-
-.label{
-  color:var(--muted);
-  font-weight:600;
-}
-
-.value{color:var(--text)}
-
-.pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  width:fit-content;
-  padding:6px 10px;
-  border-radius:999px;
-  border:1px solid var(--stroke);
-  font-weight:700;
-  letter-spacing:.2px;
-}
-.pending{color:var(--pink2); background: rgba(255,79,216,.10)}
-.merged{color:var(--green); background: rgba(49,208,127,.12)}
-.changes{color:var(--red); background: rgba(255,77,109,.12)}
-
-.checklist{
-  margin:0;
-  padding-left:18px;
-  color:var(--text);
-}
-.checklist li{margin:6px 0}
-
-.actions{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-top:18px;
-}
-
-.btn{
-  appearance:none;
-  border:none;
-  border-radius:14px;
-  padding:14px 16px;
-  font-weight:800;
-  font-size:15px;
-  cursor:pointer;
-  transition: transform .12s ease, filter .12s ease;
-}
-.btn:active{transform: translateY(1px)}
-.btn:hover{filter:brightness(1.06)}
-
-.yes{
-  background: linear-gradient(135deg, var(--green), #66ffb4);
-  color:#06140c;
-}
-.no{
-  background: linear-gradient(135deg, #ff4d6d, #ff8aa0);
-  color:#1a060a;
-}
-
-.hint{
-  margin:16px 0 0 0;
-  color:var(--muted);
-}
-
-.footer{
-  padding:16px 28px;
-  border-top:1px solid var(--stroke);
-  color:rgba(255,255,255,.65);
-  background: rgba(0,0,0,.12);
-}
-
-.tiny{margin:0; font-size:12px; line-height:1.4}
-
-.confetti{
-  pointer-events:none;
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-}
-.confetti span{
-  position:absolute;
-  top:-10vh;
-  width:10px;
-  height:18px;
-  border-radius:3px;
-  opacity:.95;
-  transform: rotate(12deg);
-  animation: fall 1.9s linear forwards;
-}
-
-@keyframes fall{
-  to{
-    transform: translateY(120vh) rotate(520deg);
-    opacity:1;
+/** ---------- Modal ---------- */
+function showModal(open) {
+  if (open) {
+    modal.classList.add("show");
+    modal.setAttribute("aria-hidden", "false");
+  } else {
+    modal.classList.remove("show");
+    modal.setAttribute("aria-hidden", "true");
   }
 }
+
+openNoteBtn.addEventListener("click", () => showModal(true));
+closeModalBtn.addEventListener("click", () => showModal(false));
+modalCloseBtn.addEventListener("click", () => showModal(false));
+
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) showModal(false);
+});
+
+modalYesBtn.addEventListener("click", () => {
+  showModal(false);
+  doMerge();
+});
+
+/** ---------- Merge buttons ---------- */
+yesBtn.addEventListener("click", doMerge);
+
+/** ---------- Keyboard niceties ---------- */
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") showModal(false);
+  if (e.key.toLowerCase() === "m") doMerge(); // “m” for merge
+});
