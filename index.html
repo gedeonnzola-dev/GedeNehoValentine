@@ -3,55 +3,199 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Valentine Request 💖</title>
+  <title>PR #14: Be My Valentine 💖</title>
+  <meta name="description" content="A romantic pull request with one reviewer: you." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <main class="card" aria-live="polite">
-    <header class="header">
-      <div class="badge">PR #14</div>
-      <h1>Will you be my Valentine? 💘</h1>
-      <p class="sub">
-        Proposed change: <span class="code">You + Me → Feb 14</span>
-      </p>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <header class="topbar">
+      <div class="repo">
+        <div class="dot"></div>
+        <span class="mono">gedeonnzola-dev /</span>
+        <span class="repo-name">GedeNehoValentine</span>
+        <span class="tag">Public</span>
+      </div>
+
+      <div class="top-actions">
+        <button class="ghost" id="openNoteBtn" type="button">💌 Read note</button>
+        <a class="ghost" href="#gallery">📷 Memories</a>
+      </div>
     </header>
 
-    <section class="details">
-      <div class="row">
-        <span class="label">Status</span>
-        <span class="pill pending" id="statusPill">Pending Review</span>
+    <section class="hero">
+      <div class="hero-left">
+        <div class="pr-pill">
+          <span class="mono">PR</span>
+          <span class="mono">#14</span>
+          <span class="pr-status" id="prStatus">Pending review</span>
+        </div>
+
+        <h1 class="title" id="title">
+          Will you be my Valentine? 💘
+        </h1>
+
+        <p class="subtitle">
+          Proposed change: <span class="mono code">You + Me → Feb 14</span>
+          <br />
+          Reviewer: <strong>you</strong> (and only you) 💗
+        </p>
+
+        <div class="quick-info">
+          <div class="info-card">
+            <div class="info-label">Motivation</div>
+            <div class="info-value">You make the ordinary feel like a warm highlight.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-label">Risk</div>
+            <div class="info-value">High: you might smile too much.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-label">Rollback Plan</div>
+            <div class="info-value">Not applicable. I’m keeping you. 😌</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn yes" id="yesBtn" type="button">✅ Approve & Merge</button>
+          <button class="btn no" id="noBtn" type="button">❌ Request changes</button>
+        </div>
+
+        <div class="status-line" id="statusLine">
+          <span class="mono">Checks:</span>
+          <span class="ok">●</span> hearts passing
+          <span class="sep">•</span>
+          <span class="warn">●</span> butterflies running
+          <span class="sep">•</span>
+          <span class="ok">●</span> vibes green
+        </div>
       </div>
 
-      <div class="row">
-        <span class="label">Motivation</span>
-        <span class="value">You make my life run smoother than a clean build ✨</span>
+      <div class="hero-right">
+        <div class="cover">
+          <img src="assets/cover.jpg" alt="A favorite photo" />
+          <div class="cover-overlay">
+            <div class="cover-title">A very important pull request 💞</div>
+            <div class="cover-sub mono">main ← valentine-branch</div>
+          </div>
+        </div>
+
+        <div class="mini-panel">
+          <div class="mini-title">Acceptance criteria ✅</div>
+          <ul class="checklist">
+            <li>🍽️ A date that feels like us</li>
+            <li>🕯️ Soft romance, no pressure</li>
+            <li>😂 Laughing until we forget the time</li>
+            <li>📸 One memory added to the gallery</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="gallery">
+      <div class="section-head">
+        <h2>Memories gallery 📷</h2>
+        <p class="muted">A few snapshots I never want to lose.</p>
       </div>
 
-      <div class="row">
-        <span class="label">Acceptance Criteria</span>
-        <ul class="checklist">
-          <li>🍽️ Food</li>
-          <li>😂 Laughing too much</li>
-          <li>📸 Cute moment (optional but recommended)</li>
-          <li>💞 You say yes</li>
-        </ul>
+      <div class="gallery">
+        <button class="nav left" id="prevBtn" type="button" aria-label="Previous photo">‹</button>
+
+        <div class="frame">
+          <img id="slideImg" src="assets/photo1.jpg" alt="Memory photo" />
+          <div class="caption">
+            <div class="caption-title" id="captionTitle">commit: you made my day brighter</div>
+            <div class="caption-sub mono" id="captionSub">hash: 0214-love</div>
+          </div>
+        </div>
+
+        <button class="nav right" id="nextBtn" type="button" aria-label="Next photo">›</button>
       </div>
 
-      <div class="actions">
-        <button class="btn yes" id="yesBtn">✅ Approve & Merge</button>
-        <button class="btn no" id="noBtn">❌ Request Changes</button>
+      <div class="dots" id="dots" aria-label="Slideshow dots"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Timeline</h2>
+        <p class="muted">Tiny moments. Big meaning.</p>
       </div>
 
-      <p class="hint" id="hint">Reviewer: <strong>you</strong> 💗</p>
+      <div class="timeline">
+        <div class="event">
+          <div class="badge">init</div>
+          <div>
+            <div class="event-title">First time I thought, “Wow… it’s you.”</div>
+            <div class="event-sub muted">Butterflies installed successfully 🦋</div>
+          </div>
+        </div>
+
+        <div class="event">
+          <div class="badge">feat</div>
+          <div>
+            <div class="event-title">You became my favourite part of the day.</div>
+            <div class="event-sub muted">No errors, just calm and warmth.</div>
+          </div>
+        </div>
+
+        <div class="event">
+          <div class="badge">merge?</div>
+          <div>
+            <div class="event-title">Today: I’m asking the simplest, biggest question.</div>
+            <div class="event-sub muted">Will you be my Valentine? 💘</div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <footer class="footer">
-      <p class="tiny">
-        By clicking “Approve & Merge,” you agree to a Valentine’s Day branch that includes smiles and good vibes.
-      </p>
+      <div class="footer-left">
+        <div class="mono">© 2026 Valentine Build</div>
+        <div class="muted tiny">Designed with soft vibes and good intentions.</div>
+      </div>
+      <div class="footer-right mono">
+        <a href="#top" class="muted">back to top ↑</a>
+      </div>
     </footer>
   </main>
+
+  <!-- Love Note Modal -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div>
+          <div class="mono small muted">PRIVATE NOTE</div>
+          <h3 id="modalTitle">A note for you 💌</h3>
+        </div>
+        <button class="close" id="closeModalBtn" type="button" aria-label="Close note">✕</button>
+      </div>
+
+      <div class="modal-body" id="noteBody">
+        <p>
+          Hey you,
+        </p>
+        <p>
+          I made this little page because sometimes I’d rather show you than just say it.
+          I like you… a lot. The way you make everything feel softer, funnier, and more real.
+        </p>
+        <p>
+          So here’s my question, wrapped in code and courage:
+          <strong>Will you be my Valentine?</strong>
+        </p>
+        <p class="muted tiny">
+          P.S. If you press “Approve & Merge,” it unlocks a surprise.
+        </p>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn yes" id="modalYesBtn" type="button">✅ Approve & Merge</button>
+        <button class="btn ghost2" id="modalCloseBtn" type="button">Not yet</button>
+      </div>
+    </div>
+  </div>
 
   <div class="confetti" id="confetti" aria-hidden="true"></div>
 
