@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentine Request 💖</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main class="card" aria-live="polite">
+    <header class="header">
+      <div class="badge">PR #14</div>
+      <h1>Will you be my Valentine? 💘</h1>
+      <p class="sub">
+        Proposed change: <span class="code">You + Me → Feb 14</span>
+      </p>
+    </header>
+
+    <section class="details">
+      <div class="row">
+        <span class="label">Status</span>
+        <span class="pill pending" id="statusPill">Pending Review</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Motivation</span>
+        <span class="value">You make my life run smoother than a clean build ✨</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Acceptance Criteria</span>
+        <ul class="checklist">
+          <li>🍽️ Food</li>
+          <li>😂 Laughing too much</li>
+          <li>📸 Cute moment (optional but recommended)</li>
+          <li>💞 You say yes</li>
+        </ul>
+      </div>
+
+      <div class="actions">
+        <button class="btn yes" id="yesBtn">✅ Approve & Merge</button>
+        <button class="btn no" id="noBtn">❌ Request Changes</button>
+      </div>
+
+      <p class="hint" id="hint">Reviewer: <strong>you</strong> 💗</p>
+    </section>
+
+    <footer class="footer">
+      <p class="tiny">
+        By clicking “Approve & Merge,” you agree to a Valentine’s Day branch that includes smiles and good vibes.
+      </p>
+    </footer>
+  </main>
+
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
